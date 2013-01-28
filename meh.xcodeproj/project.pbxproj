@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7B6DAB0B16B6F2C1001A5960 /* meh.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7B6DAB0916B6F2C1001A5960 /* meh.xcdatamodeld */; };
+		7B6DAB1A16B6F99E001A5960 /* _ImageData.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B6DAB1316B6F99E001A5960 /* _ImageData.m */; };
+		7B6DAB1B16B6F99E001A5960 /* _ImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B6DAB1516B6F99E001A5960 /* _ImageInfo.m */; };
+		7B6DAB1C16B6F99E001A5960 /* ImageData.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B6DAB1716B6F99E001A5960 /* ImageData.m */; };
+		7B6DAB1D16B6F99E001A5960 /* ImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B6DAB1916B6F99E001A5960 /* ImageInfo.m */; };
+		7B6DAB1F16B6FA4A001A5960 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B6DAB1E16B6FA4A001A5960 /* SystemConfiguration.framework */; };
+		7B6DAB2116B6FA5A001A5960 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B6DAB2016B6FA5A001A5960 /* MobileCoreServices.framework */; };
+		7B6DAB2316B6FA61001A5960 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B6DAB2216B6FA61001A5960 /* CoreData.framework */; };
 		7BF03B5416B061240039D894 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BF03B5316B061240039D894 /* UIKit.framework */; };
 		7BF03B5616B061240039D894 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BF03B5516B061240039D894 /* Foundation.framework */; };
 		7BF03B5816B061240039D894 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BF03B5716B061240039D894 /* CoreGraphics.framework */; };
@@ -55,6 +63,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7B6DAB0A16B6F2C1001A5960 /* meh.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = meh.xcdatamodel; sourceTree = "<group>"; };
+		7B6DAB1216B6F99E001A5960 /* _ImageData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _ImageData.h; sourceTree = "<group>"; };
+		7B6DAB1316B6F99E001A5960 /* _ImageData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _ImageData.m; sourceTree = "<group>"; };
+		7B6DAB1416B6F99E001A5960 /* _ImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _ImageInfo.h; sourceTree = "<group>"; };
+		7B6DAB1516B6F99E001A5960 /* _ImageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _ImageInfo.m; sourceTree = "<group>"; };
+		7B6DAB1616B6F99E001A5960 /* ImageData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageData.h; sourceTree = "<group>"; };
+		7B6DAB1716B6F99E001A5960 /* ImageData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageData.m; sourceTree = "<group>"; };
+		7B6DAB1816B6F99E001A5960 /* ImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageInfo.h; sourceTree = "<group>"; };
+		7B6DAB1916B6F99E001A5960 /* ImageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageInfo.m; sourceTree = "<group>"; };
+		7B6DAB1E16B6FA4A001A5960 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		7B6DAB2016B6FA5A001A5960 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		7B6DAB2216B6FA61001A5960 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		7BF03B4F16B061240039D894 /* meh.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = meh.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BF03B5316B061240039D894 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7BF03B5516B061240039D894 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -104,6 +124,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B6DAB2316B6FA61001A5960 /* CoreData.framework in Frameworks */,
+				7B6DAB2116B6FA5A001A5960 /* MobileCoreServices.framework in Frameworks */,
+				7B6DAB1F16B6FA4A001A5960 /* SystemConfiguration.framework in Frameworks */,
 				7BF03B5416B061240039D894 /* UIKit.framework in Frameworks */,
 				7BF03B5616B061240039D894 /* Foundation.framework in Frameworks */,
 				7BF03B5816B061240039D894 /* CoreGraphics.framework in Frameworks */,
@@ -146,6 +169,9 @@
 		7BF03B5216B061240039D894 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7B6DAB2216B6FA61001A5960 /* CoreData.framework */,
+				7B6DAB2016B6FA5A001A5960 /* MobileCoreServices.framework */,
+				7B6DAB1E16B6FA4A001A5960 /* SystemConfiguration.framework */,
 				7BF03B5316B061240039D894 /* UIKit.framework */,
 				7BF03B5516B061240039D894 /* Foundation.framework */,
 				7BF03B5716B061240039D894 /* CoreGraphics.framework */,
@@ -157,13 +183,22 @@
 		7BF03B5916B061240039D894 /* meh */ = {
 			isa = PBXGroup;
 			children = (
+				7BF03B5A16B061240039D894 /* Supporting Files */,
 				7BF03B6216B061240039D894 /* AppDelegate.h */,
 				7BF03B6316B061240039D894 /* AppDelegate.m */,
 				7BF03B6B16B061240039D894 /* ViewController.h */,
 				7BF03B6C16B061240039D894 /* ViewController.m */,
 				7BF03B6E16B061240039D894 /* ViewController_iPhone.xib */,
 				7BF03B7116B061240039D894 /* ViewController_iPad.xib */,
-				7BF03B5A16B061240039D894 /* Supporting Files */,
+				7B6DAB0916B6F2C1001A5960 /* meh.xcdatamodeld */,
+				7B6DAB1216B6F99E001A5960 /* _ImageData.h */,
+				7B6DAB1316B6F99E001A5960 /* _ImageData.m */,
+				7B6DAB1416B6F99E001A5960 /* _ImageInfo.h */,
+				7B6DAB1516B6F99E001A5960 /* _ImageInfo.m */,
+				7B6DAB1616B6F99E001A5960 /* ImageData.h */,
+				7B6DAB1716B6F99E001A5960 /* ImageData.m */,
+				7B6DAB1816B6F99E001A5960 /* ImageInfo.h */,
+				7B6DAB1916B6F99E001A5960 /* ImageInfo.m */,
 			);
 			path = meh;
 			sourceTree = "<group>";
@@ -351,6 +386,11 @@
 				7BF03BB116B0620A0039D894 /* AFURLConnectionOperation.m in Sources */,
 				7BF03BB316B0620A0039D894 /* AFXMLRequestOperation.m in Sources */,
 				7BF03BB516B0620A0039D894 /* UIImageView+AFNetworking.m in Sources */,
+				7B6DAB0B16B6F2C1001A5960 /* meh.xcdatamodeld in Sources */,
+				7B6DAB1A16B6F99E001A5960 /* _ImageData.m in Sources */,
+				7B6DAB1B16B6F99E001A5960 /* _ImageInfo.m in Sources */,
+				7B6DAB1C16B6F99E001A5960 /* ImageData.m in Sources */,
+				7B6DAB1D16B6F99E001A5960 /* ImageInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,6 +584,7 @@
 				7BF03B8D16B061250039D894 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7BF03B8E16B061250039D894 /* Build configuration list for PBXNativeTarget "mehTests" */ = {
 			isa = XCConfigurationList;
@@ -552,8 +593,22 @@
 				7BF03B9016B061250039D894 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		7B6DAB0916B6F2C1001A5960 /* meh.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				7B6DAB0A16B6F2C1001A5960 /* meh.xcdatamodel */,
+			);
+			currentVersion = 7B6DAB0A16B6F2C1001A5960 /* meh.xcdatamodel */;
+			path = meh.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 7BF03B4616B061240039D894 /* Project object */;
 }
