@@ -7,12 +7,13 @@
 //
 
 #import "ViewController.h"
-#import "AFNetworking.h"
+#import "CSImageWire.h"
 
 
 @interface ViewController ()
 
 @end
+
 
 @implementation ViewController
 
@@ -27,12 +28,11 @@
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
      {
-         NSString *string = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-         NSLog(@"%@", string);
+         [CSImageWire imageInfosFromData:responseObject];
      }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
-         
+         NSLog(@"%@", error);
      }];
     
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];

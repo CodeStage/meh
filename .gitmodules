@@ -1,3 +1,6 @@
 [submodule "AFNetworking"]
 	path = AFNetworking
 	url = https://github.com/AFNetworking/AFNetworking.git
+[submodule "MagicalRecord"]
+	path = MagicalRecord
+	url = https://github.com/magicalpanda/MagicalRecord.git

@@ -6,6 +6,7 @@
 
 extern const struct ImageInfoAttributes {
 	__unsafe_unretained NSString *pageNumber;
+	__unsafe_unretained NSString *title;
 	__unsafe_unretained NSString *url;
 } ImageInfoAttributes;
 
@@ -21,6 +22,7 @@ extern const struct ImageInfoFetchedProperties {
 @class ImageData;
 @class ImageInfo;
 @class ImageInfo;
+
 
 
 
@@ -47,6 +49,16 @@ extern const struct ImageInfoFetchedProperties {
 - (void)setPageNumberValue:(int32_t)value_;
 
 //- (BOOL)validatePageNumber:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSString* title;
+
+
+
+//- (BOOL)validateTitle:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -98,6 +110,12 @@ extern const struct ImageInfoFetchedProperties {
 
 - (int32_t)primitivePageNumberValue;
 - (void)setPrimitivePageNumberValue:(int32_t)value_;
+
+
+
+
+- (NSString*)primitiveTitle;
+- (void)setPrimitiveTitle:(NSString*)value;
 
 
 

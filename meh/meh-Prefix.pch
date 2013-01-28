@@ -13,5 +13,14 @@
     #import <Foundation/Foundation.h>
 #endif
 
+
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <MobileCoreServices/MobileCoreServices.h>
+
+#import "AFNetworking.h"
+
+#import "MagicalRecord.h"
+#import "CoreData+MagicalRecord.h"
+
+#import "ImageInfo.h"
+#import "ImageData.h"

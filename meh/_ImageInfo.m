@@ -5,6 +5,7 @@
 
 const struct ImageInfoAttributes ImageInfoAttributes = {
 	.pageNumber = @"pageNumber",
+	.title = @"title",
 	.url = @"url",
 };
 
@@ -76,6 +77,13 @@ const struct ImageInfoFetchedProperties ImageInfoFetchedProperties = {
 - (void)setPrimitivePageNumberValue:(int32_t)value_ {
 	[self setPrimitivePageNumber:[NSNumber numberWithInt:value_]];
 }
+
+
+
+
+
+@dynamic title;
+
 
 
 
