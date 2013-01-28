@@ -10,6 +10,6 @@
 
 @interface CSImageWire : NSObject
 
-+ (NSArray *)imageInfosFromData:(NSData *)data;
+
 
 @end

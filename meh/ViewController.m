@@ -22,21 +22,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    NSString *url = [NSString stringWithFormat:@"http://www.meh.ro/feed"];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
-    
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
-     {
-         [CSImageWire imageInfosFromData:responseObject];
-     }
-                                     failure:^(AFHTTPRequestOperation *operation, NSError *error)
-     {
-         NSLog(@"%@", error);
-     }];
-    
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-    [queue addOperation:operation];
+
 }
 
 - (void)didReceiveMemoryWarning
