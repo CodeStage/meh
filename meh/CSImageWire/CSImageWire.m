@@ -39,7 +39,7 @@ static NSString *const kTitleKey    = @"title";
 
 - (ImageInfo *)firstImage
 {
-    ImageInfo *info = [ImageInfo MR_findFirst];
+    ImageInfo *info = [ImageInfo MR_findFirstOrderedByAttribute:@"url" ascending:NO];
     [self refreshFirstImage];
     
     if (info.imageData.data)
@@ -100,7 +100,7 @@ static NSString *const kTitleKey    = @"title";
 - (void)refreshFirstImage
 {
     [self fetchInfosForPage:1 completion:^{
-        ImageInfo *info = [ImageInfo MR_findFirst];
+        ImageInfo *info = [ImageInfo MR_findFirstOrderedByAttribute:@"url" ascending:NO];
         [self fetchDataForImageInfo:info firstImage:YES];
     }];
 }
@@ -123,6 +123,7 @@ static NSString *const kTitleKey    = @"title";
 
 - (void)didLoadImage:(ImageInfo *)info firstImage:(BOOL)firstImage
 {
+    NSLog(@"Notifying delegate with '%@' (first: %u)", info.title, firstImage);
     dispatch_async(dispatch_get_main_queue(), ^{
         if (firstImage)
         {
@@ -242,7 +243,7 @@ static NSString *const kTitleKey    = @"title";
     {
         NSString *url = [dict objectForKey:kUrlKey];
         NSString *title = [dict objectForKey:kTitleKey];
-        ImageInfo *info = [ImageInfo MR_findFirstByAttribute:@"url" withValue:url];
+        ImageInfo *info = [ImageInfo MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"url == %@", url] sortedBy:@"url" ascending:NO];
         
         if (!info)
         {
@@ -283,11 +284,12 @@ static NSString *const kTitleKey    = @"title";
              {
                  if (page > 1)
                  {
-                     NSArray *predecessingInfos = [ImageInfo MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"pageNumber == %u", page - 1]];
+                     NSArray *predecessingInfos = [ImageInfo MR_findAllSortedBy:@"url" ascending:NO withPredicate:[NSPredicate predicateWithFormat:@"pageNumber == %u", page - 1]];
+                     
                      ImageInfo *lastPredecessingInfo = [predecessingInfos lastObject];
                      
                      lastPredecessingInfo.successor = localInfo;
-                     NSLog(@"setting successor of '%@' to '%@'", lastPredecessingInfo.title, localInfo.title);
+                     NSLog(@"setting successor   of '%@' to '%@'", lastPredecessingInfo.title, localInfo.title);
                      
                      localInfo.predecessor = lastPredecessingInfo;
                      NSLog(@"setting predecessor of '%@' to '%@'", localInfo.title, lastPredecessingInfo.title);
@@ -303,7 +305,7 @@ static NSString *const kTitleKey    = @"title";
              if (i < [infoModels count]-1)
              {
                  localInfo.successor = infoModels[i+1];
-                 NSLog(@"setting successor of '%@' to '%@'", localInfo.title, localInfo.successor.title);
+                 NSLog(@"setting successor   of '%@' to '%@'", localInfo.title, localInfo.successor.title);
              }
              
              if (localInfo.successor.successor)
