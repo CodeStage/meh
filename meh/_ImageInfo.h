@@ -11,7 +11,7 @@ extern const struct ImageInfoAttributes {
 } ImageInfoAttributes;
 
 extern const struct ImageInfoRelationships {
-	__unsafe_unretained NSString *data;
+	__unsafe_unretained NSString *imageData;
 	__unsafe_unretained NSString *predecessor;
 	__unsafe_unretained NSString *successor;
 } ImageInfoRelationships;
@@ -74,9 +74,9 @@ extern const struct ImageInfoFetchedProperties {
 
 
 
-@property (nonatomic, strong) ImageData *data;
+@property (nonatomic, strong) ImageData *imageData;
 
-//- (BOOL)validateData:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateImageData:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -127,8 +127,8 @@ extern const struct ImageInfoFetchedProperties {
 
 
 
-- (ImageData*)primitiveData;
-- (void)setPrimitiveData:(ImageData*)value;
+- (ImageData*)primitiveImageData;
+- (void)setPrimitiveImageData:(ImageData*)value;
 
 
 

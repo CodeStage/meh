@@ -7,8 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
-#import "ViewController.h"
+#import "PageViewController.h"
 
 
 @implementation AppDelegate
@@ -16,20 +15,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [MagicalRecord setupCoreDataStackWithInMemoryStore];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
-    [MagicalRecord setupCoreDataStackWithStoreNamed:@"meh.sqlite"];
-    
-    // Override point for customization after application launch.
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
-    {
-        self.viewController = [[ViewController alloc] initWithNibName:@"ViewController_iPhone" bundle:nil];
-    }
-    else
-    {
-        self.viewController = [[ViewController alloc] initWithNibName:@"ViewController_iPad" bundle:nil];
-    }
-    
+    self.viewController = [[PageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
+                                                        navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
+                                                                      options:@{ UIPageViewControllerOptionInterPageSpacingKey : @4.f }];
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     

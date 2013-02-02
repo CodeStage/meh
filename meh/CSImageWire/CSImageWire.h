@@ -6,10 +6,23 @@
 //  Copyright (c) 2013 CodeStage. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@class CSImageWire, ImageInfo;
+
+
+@protocol CSImageWireDelegate <NSObject>
+
+- (void)imageWire:(CSImageWire *)wire didLoadFirstImage:(ImageInfo *)imageInfo;
+- (void)imageWire:(CSImageWire *)wire didLoadImage:(ImageInfo *)imageInfo;
+
+@end
+
 
 @interface CSImageWire : NSObject
 
+@property (nonatomic, weak) id<CSImageWireDelegate> delegate;
 
+- (ImageInfo *)firstImage;
+- (ImageInfo *)predecessingImageForImage:(ImageInfo *)info;
+- (ImageInfo *)successingImageForImage:(ImageInfo *)info;
 
 @end

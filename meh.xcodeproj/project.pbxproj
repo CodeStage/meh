@@ -42,6 +42,9 @@
 		7B6DAD2016B6FC66001A5960 /* MagicalRecord+ShorthandSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B6DAD0316B6FC66001A5960 /* MagicalRecord+ShorthandSupport.m */; };
 		7B6DAD2116B6FC66001A5960 /* MagicalRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B6DAD0516B6FC66001A5960 /* MagicalRecord.m */; };
 		7B6DAD2916B6FE4D001A5960 /* CSImageWire.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B6DAD2816B6FE4D001A5960 /* CSImageWire.m */; };
+		7BEDF4BA16BD9C85009CE596 /* ImageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BEDF4B716BD9C85009CE596 /* ImageScrollView.m */; };
+		7BEDF4BB16BD9C85009CE596 /* ImageScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BEDF4B916BD9C85009CE596 /* ImageScrollViewController.m */; };
+		7BEDF4BE16BDA2D6009CE596 /* PageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BEDF4BD16BDA2D6009CE596 /* PageViewController.m */; };
 		7BF03B5416B061240039D894 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BF03B5316B061240039D894 /* UIKit.framework */; };
 		7BF03B5616B061240039D894 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BF03B5516B061240039D894 /* Foundation.framework */; };
 		7BF03B5816B061240039D894 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BF03B5716B061240039D894 /* CoreGraphics.framework */; };
@@ -51,9 +54,6 @@
 		7BF03B6616B061240039D894 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF03B6516B061240039D894 /* Default.png */; };
 		7BF03B6816B061240039D894 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF03B6716B061240039D894 /* Default@2x.png */; };
 		7BF03B6A16B061240039D894 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BF03B6916B061240039D894 /* Default-568h@2x.png */; };
-		7BF03B6D16B061240039D894 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BF03B6C16B061240039D894 /* ViewController.m */; };
-		7BF03B7016B061240039D894 /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7BF03B6E16B061240039D894 /* ViewController_iPhone.xib */; };
-		7BF03B7316B061240039D894 /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7BF03B7116B061240039D894 /* ViewController_iPad.xib */; };
 		7BF03B7B16B061250039D894 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BF03B7A16B061250039D894 /* SenTestingKit.framework */; };
 		7BF03B7C16B061250039D894 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BF03B5316B061240039D894 /* UIKit.framework */; };
 		7BF03B7D16B061250039D894 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BF03B5516B061240039D894 /* Foundation.framework */; };
@@ -158,6 +158,12 @@
 		7B6DAD0716B6FC66001A5960 /* CoreData+MagicalRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreData+MagicalRecord.h"; sourceTree = "<group>"; };
 		7B6DAD2716B6FE4D001A5960 /* CSImageWire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CSImageWire.h; path = CSImageWire/CSImageWire.h; sourceTree = "<group>"; };
 		7B6DAD2816B6FE4D001A5960 /* CSImageWire.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CSImageWire.m; path = CSImageWire/CSImageWire.m; sourceTree = "<group>"; };
+		7BEDF4B616BD9C85009CE596 /* ImageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageScrollView.h; sourceTree = "<group>"; };
+		7BEDF4B716BD9C85009CE596 /* ImageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageScrollView.m; sourceTree = "<group>"; };
+		7BEDF4B816BD9C85009CE596 /* ImageScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageScrollViewController.h; sourceTree = "<group>"; };
+		7BEDF4B916BD9C85009CE596 /* ImageScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageScrollViewController.m; sourceTree = "<group>"; };
+		7BEDF4BC16BDA2D5009CE596 /* PageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageViewController.h; sourceTree = "<group>"; };
+		7BEDF4BD16BDA2D6009CE596 /* PageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageViewController.m; sourceTree = "<group>"; };
 		7BF03B4F16B061240039D894 /* meh.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = meh.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BF03B5316B061240039D894 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7BF03B5516B061240039D894 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -171,10 +177,6 @@
 		7BF03B6516B061240039D894 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		7BF03B6716B061240039D894 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		7BF03B6916B061240039D894 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		7BF03B6B16B061240039D894 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		7BF03B6C16B061240039D894 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		7BF03B6F16B061240039D894 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPhone.xib; sourceTree = "<group>"; };
-		7BF03B7216B061240039D894 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPad.xib; sourceTree = "<group>"; };
 		7BF03B7916B061250039D894 /* mehTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mehTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BF03B7A16B061250039D894 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		7BF03B8216B061250039D894 /* mehTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "mehTests-Info.plist"; sourceTree = "<group>"; };
@@ -400,10 +402,12 @@
 				7BF03B6116B061240039D894 /* meh-Prefix.pch */,
 				7BF03B6216B061240039D894 /* AppDelegate.h */,
 				7BF03B6316B061240039D894 /* AppDelegate.m */,
-				7BF03B6B16B061240039D894 /* ViewController.h */,
-				7BF03B6C16B061240039D894 /* ViewController.m */,
-				7BF03B6E16B061240039D894 /* ViewController_iPhone.xib */,
-				7BF03B7116B061240039D894 /* ViewController_iPad.xib */,
+				7BEDF4B616BD9C85009CE596 /* ImageScrollView.h */,
+				7BEDF4B716BD9C85009CE596 /* ImageScrollView.m */,
+				7BEDF4B816BD9C85009CE596 /* ImageScrollViewController.h */,
+				7BEDF4B916BD9C85009CE596 /* ImageScrollViewController.m */,
+				7BEDF4BC16BDA2D5009CE596 /* PageViewController.h */,
+				7BEDF4BD16BDA2D6009CE596 /* PageViewController.m */,
 			);
 			path = meh;
 			sourceTree = "<group>";
@@ -542,8 +546,6 @@
 				7BF03B6616B061240039D894 /* Default.png in Resources */,
 				7BF03B6816B061240039D894 /* Default@2x.png in Resources */,
 				7BF03B6A16B061240039D894 /* Default-568h@2x.png in Resources */,
-				7BF03B7016B061240039D894 /* ViewController_iPhone.xib in Resources */,
-				7BF03B7316B061240039D894 /* ViewController_iPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -580,7 +582,6 @@
 			files = (
 				7BF03B6016B061240039D894 /* main.m in Sources */,
 				7BF03B6416B061240039D894 /* AppDelegate.m in Sources */,
-				7BF03B6D16B061240039D894 /* ViewController.m in Sources */,
 				7BF03BA516B0620A0039D894 /* AFHTTPClient.m in Sources */,
 				7BF03BA716B0620A0039D894 /* AFHTTPRequestOperation.m in Sources */,
 				7BF03BA916B0620A0039D894 /* AFImageRequestOperation.m in Sources */,
@@ -622,6 +623,9 @@
 				7B6DAD2016B6FC66001A5960 /* MagicalRecord+ShorthandSupport.m in Sources */,
 				7B6DAD2116B6FC66001A5960 /* MagicalRecord.m in Sources */,
 				7B6DAD2916B6FE4D001A5960 /* CSImageWire.m in Sources */,
+				7BEDF4BA16BD9C85009CE596 /* ImageScrollView.m in Sources */,
+				7BEDF4BB16BD9C85009CE596 /* ImageScrollViewController.m in Sources */,
+				7BEDF4BE16BDA2D6009CE596 /* PageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -659,22 +663,6 @@
 				7BF03B5D16B061240039D894 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		7BF03B6E16B061240039D894 /* ViewController_iPhone.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7BF03B6F16B061240039D894 /* en */,
-			);
-			name = ViewController_iPhone.xib;
-			sourceTree = "<group>";
-		};
-		7BF03B7116B061240039D894 /* ViewController_iPad.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7BF03B7216B061240039D894 /* en */,
-			);
-			name = ViewController_iPad.xib;
 			sourceTree = "<group>";
 		};
 		7BF03B8316B061250039D894 /* InfoPlist.strings */ = {

@@ -8,7 +8,7 @@ const struct ImageDataAttributes ImageDataAttributes = {
 };
 
 const struct ImageDataRelationships ImageDataRelationships = {
-	.info = @"info",
+	.imageInfo = @"imageInfo",
 };
 
 const struct ImageDataFetchedProperties ImageDataFetchedProperties = {
@@ -54,7 +54,7 @@ const struct ImageDataFetchedProperties ImageDataFetchedProperties = {
 
 
 
-@dynamic info;
+@dynamic imageInfo;
 
 	
 

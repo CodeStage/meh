@@ -6,14 +6,12 @@
 //  Copyright (c) 2013 CodeStage. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@class PageViewController;
 
-@class ViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
-@property (strong, nonatomic) ViewController *viewController;
+@property PageViewController *viewController;
 
 @end
