@@ -20,7 +20,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.viewController = [[PageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
                                                         navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
-                                                                      options:@{ UIPageViewControllerOptionInterPageSpacingKey : @4.f }];
+                                                                      options:@{ UIPageViewControllerOptionInterPageSpacingKey : @10.f }];
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     

@@ -46,6 +46,7 @@
     {
         ImageScrollViewController *vc = [[ImageScrollViewController alloc] initWithImageInfo:info];
         [self setViewControllers:@[vc] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:NULL];
+        [self.wire successingImageForImage:info];
     }
 }
 
@@ -70,6 +71,7 @@
     if (nextInfo)
     {
         ImageScrollViewController *vc = [[ImageScrollViewController alloc] initWithImageInfo:nextInfo];
+        [self.wire successingImageForImage:nextInfo];
         return vc;
     }
     return nil;
@@ -78,18 +80,25 @@
 
 - (void)imageWire:(CSImageWire *)wire didLoadFirstImage:(ImageInfo *)imageInfo
 {
-    ImageScrollViewController *vc = [[ImageScrollViewController alloc] initWithImageInfo:imageInfo];
-    [self setViewControllers:@[vc] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:NULL];
+    if ([self.viewControllers count] == 0)
+    {
+        ImageScrollViewController *vc = [[ImageScrollViewController alloc] initWithImageInfo:imageInfo];
+        [self setViewControllers:@[vc] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:NULL];
+    }
 }
 
 
 - (void)imageWire:(CSImageWire *)wire didLoadImage:(ImageInfo *)imageInfo
 {
-    ImageScrollViewController *vc = self.viewControllers[0];
-    ImageInfo *info = vc.imageInfo;
-    if ([info.predecessor isEqual:imageInfo] || [info.successor isEqual:imageInfo])
+    if ([self.viewControllers count] > 0)
     {
-        [self setViewControllers:@[vc] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:NULL];
+        ImageScrollViewController *vc = self.viewControllers[0];
+        ImageInfo *visibleImageInfo = vc.imageInfo;
+        if (visibleImageInfo.successor == nil || [visibleImageInfo.predecessor.url isEqual:imageInfo.url] || [visibleImageInfo.successor.url isEqual:imageInfo.url])
+        {
+            [self setViewControllers:@[vc] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:NULL];
+            [self.wire successingImageForImage:imageInfo];
+        }
     }
 }
 

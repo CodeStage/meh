@@ -52,6 +52,7 @@ static NSString *const kTitleKey    = @"title";
 
 - (ImageInfo *)predecessingImageForImage:(ImageInfo *)info
 {
+    info = [ImageInfo MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"url == %@", info.url] sortedBy:@"url" ascending:NO];
     if (info.predecessor)
     {
         if (info.predecessor.imageData.data)
@@ -74,6 +75,7 @@ static NSString *const kTitleKey    = @"title";
 
 - (ImageInfo *)successingImageForImage:(ImageInfo *)info
 {
+    info = [ImageInfo MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"url == %@", info.url] sortedBy:@"url" ascending:NO];
     if (info.successor)
     {
         if (info.successor.imageData.data)
@@ -88,7 +90,16 @@ static NSString *const kTitleKey    = @"title";
     }
     else
     {
-        [self fetchSuccessorForImage:info startingAtPage:1];
+        [self fetchInfosForPage:info.pageNumberValue+1 completion:^{
+            if (!info.successor)
+            {
+                [self fetchSuccessorForImage:info startingAtPage:1];
+            }
+            else
+            {
+                [self fetchDataForImageInfo:info firstImage:NO];
+            }
+        }];
         return nil;
     }
 }
@@ -141,7 +152,6 @@ static NSString *const kTitleKey    = @"title";
 {
     if (info.imageData.data)
     {
-        [self didLoadImage:info firstImage:firstImage];
         return;
     }
     
@@ -151,22 +161,26 @@ static NSString *const kTitleKey    = @"title";
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
      {
-         [self.queue addOperationWithBlock:^{
-             [MagicalRecord saveUsingCurrentThreadContextWithBlockAndWait:^(NSManagedObjectContext *context)
-              {
-                  ImageInfo *localInfo = [info MR_inContext:context];
-                  localInfo.imageData = [ImageData MR_createInContext:context];
-                  localInfo.imageData.data = responseObject;
-                  [self didLoadImage:localInfo firstImage:firstImage];
-              }];
-         }];
+         
+         [MagicalRecord saveUsingCurrentThreadContextWithBlockAndWait:^(NSManagedObjectContext *context)
+          {
+              ImageInfo *localInfo = [info MR_inContext:context];
+              localInfo.imageData = [ImageData MR_createInContext:context];
+              localInfo.imageData.data = responseObject;
+              [self didLoadImage:localInfo firstImage:firstImage];
+              [self updateIndicator];
+              
+          }];
      }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          NSLog(@"%@", error);
+         [self updateIndicator];
      }];
     
+    if (firstImage) operation.queuePriority = NSOperationQueuePriorityHigh;
     [self.queue addOperation:operation];
+    [self updateIndicator];
 }
 
 
@@ -179,18 +193,21 @@ static NSString *const kTitleKey    = @"title";
     
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
      {
-         [self.queue addOperationWithBlock:^{
+//         [self.queue addOperationWithBlock:^{
              NSArray *infos = [self imageInfosFromData:responseObject forPage:page];
              [self processInfos:infos forPage:page];
              if (completion) completion();
-         }];
+             [self updateIndicator];
+//         }];
      }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          NSLog(@"%@", error);
+         [self updateIndicator];
      }];
     
     [self.queue addOperation:operation];
+    [self updateIndicator];
 }
 
 
@@ -263,6 +280,7 @@ static NSString *const kTitleKey    = @"title";
              localInfo.pageNumberValue = page;
          }];
         
+        [self fetchDataForImageInfo:info firstImage:NO];
         [infoModels addObject:info];
     }
     
@@ -293,6 +311,8 @@ static NSString *const kTitleKey    = @"title";
                      
                      localInfo.predecessor = lastPredecessingInfo;
                      NSLog(@"setting predecessor of '%@' to '%@'", localInfo.title, lastPredecessingInfo.title);
+                     
+                     NSLog(@"link established");
                  }
              }
              
@@ -326,6 +346,13 @@ static NSString *const kTitleKey    = @"title";
     }
     
     NSLog(@"link established: %u", linked);
+}
+
+
+- (void)updateIndicator
+{
+    BOOL visible = [self.queue operationCount] > 0;
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = visible;
 }
 
 
