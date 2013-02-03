@@ -110,10 +110,7 @@ static NSString *const kTitleKey    = @"title";
 
 - (void)refreshFirstImage
 {
-    [self fetchInfosForPage:1 completion:^{
-        ImageInfo *info = [ImageInfo MR_findFirstOrderedByAttribute:@"url" ascending:NO];
-        [self fetchDataForImageInfo:info firstImage:YES];
-    }];
+    [self fetchInfosForPage:1 completion:NULL];
 }
 
 
@@ -136,14 +133,7 @@ static NSString *const kTitleKey    = @"title";
 {
     NSLog(@"Notifying delegate with '%@' (first: %u)", info.title, firstImage);
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (firstImage)
-        {
-            [self.delegate imageWire:self didLoadFirstImage:info];
-        }
-        else
-        {
-            [self.delegate imageWire:self didLoadImage:info];
-        }
+        [self.delegate imageWire:self didLoadImage:info];
     });
 }
 

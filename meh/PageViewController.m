@@ -78,16 +78,6 @@
 }
 
 
-- (void)imageWire:(CSImageWire *)wire didLoadFirstImage:(ImageInfo *)imageInfo
-{
-    if ([self.viewControllers count] == 0)
-    {
-        ImageScrollViewController *vc = [[ImageScrollViewController alloc] initWithImageInfo:imageInfo];
-        [self setViewControllers:@[vc] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:NULL];
-    }
-}
-
-
 - (void)imageWire:(CSImageWire *)wire didLoadImage:(ImageInfo *)imageInfo
 {
     if ([self.viewControllers count] > 0)
@@ -99,6 +89,11 @@
             [self setViewControllers:@[vc] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:NULL];
             [self.wire successingImageForImage:imageInfo];
         }
+    }
+    else
+    {
+        ImageScrollViewController *vc = [[ImageScrollViewController alloc] initWithImageInfo:imageInfo];
+        [self setViewControllers:@[vc] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:NULL];
     }
 }
 

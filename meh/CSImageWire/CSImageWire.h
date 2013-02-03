@@ -11,7 +11,6 @@
 
 @protocol CSImageWireDelegate <NSObject>
 
-- (void)imageWire:(CSImageWire *)wire didLoadFirstImage:(ImageInfo *)imageInfo;
 - (void)imageWire:(CSImageWire *)wire didLoadImage:(ImageInfo *)imageInfo;
 
 @end
