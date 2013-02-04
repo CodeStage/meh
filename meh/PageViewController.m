@@ -51,6 +51,12 @@
 }
 
 
+- (void)refreshFirstPage
+{
+    [self.wire firstImage];
+}
+
+
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(ImageScrollViewController *)viewController
 {
     ImageInfo *info = viewController.imageInfo;

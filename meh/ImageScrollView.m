@@ -125,8 +125,8 @@
     
     if (boundsSize.width == 0.0 || boundsSize.height == 0.0) return;
     
-//    NSLog(@"Bounds:  %@", NSStringFromCGSize(boundsSize));
-//    NSLog(@"Image:   %@", NSStringFromCGSize(_imageSize));
+//    Log(@"Bounds:  %@", NSStringFromCGSize(boundsSize));
+//    Log(@"Image:   %@", NSStringFromCGSize(_imageSize));
     
     // iPhone 5: 640x1136
     // iPhone 4: 640x960
@@ -141,18 +141,18 @@
     BOOL phonePortrait = boundsSize.height > boundsSize.width;
     
     CGFloat minScale = imagePortrait == phonePortrait ? xScale : MIN(xScale, yScale);
-//    NSLog(@"minScale:  %f", minScale);
+//    Log(@"minScale:  %f", minScale);
     
     // on high resolution screens we have double the pixel density, so we will be seeing every pixel if we limit the
     // maximum zoom scale to 0.5.
     CGFloat maxScale = 1.0 * [[UIScreen mainScreen] scale];
-//    NSLog(@"maxScale:  %f", maxScale);
+//    Log(@"maxScale:  %f", maxScale);
     
     // don't let minScale exceed maxScale. (If the image is smaller than the screen, we don't want to force it to be zoomed.)
     if (minScale > maxScale)
     {
         maxScale = minScale;
-//        NSLog(@"maxScale:  %f", maxScale);
+//        Log(@"maxScale:  %f", maxScale);
     }
     
     self.maximumZoomScale = maxScale;

@@ -11,6 +11,7 @@
 
 static NSString *const kUrlKey      = @"url";
 static NSString *const kTitleKey    = @"title";
+//static NSUInteger kMaxStoredImages  = 2;
 
 
 @interface CSImageWire ()
@@ -41,6 +42,7 @@ static NSString *const kTitleKey    = @"title";
 {
     ImageInfo *info = [ImageInfo MR_findFirstOrderedByAttribute:@"url" ascending:NO];
     [self refreshFirstImage];
+    [self removeOldImages];
     
     if (info.imageData.data)
     {
@@ -131,7 +133,7 @@ static NSString *const kTitleKey    = @"title";
 
 - (void)didLoadImage:(ImageInfo *)info firstImage:(BOOL)firstImage
 {
-    NSLog(@"Notifying delegate with '%@' (first: %u)", info.title, firstImage);
+    Log(@"Notifying delegate with '%@' (first: %u)", info.title, firstImage);
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.delegate imageWire:self didLoadImage:info];
     });
@@ -145,13 +147,12 @@ static NSString *const kTitleKey    = @"title";
         return;
     }
     
-    NSLog(@"fetching image: %@", info.title);
+    Log(@"fetching image: %@", info.title);
     
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:info.url]];
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
      {
-         
          [MagicalRecord saveUsingCurrentThreadContextWithBlockAndWait:^(NSManagedObjectContext *context)
           {
               ImageInfo *localInfo = [info MR_inContext:context];
@@ -164,7 +165,7 @@ static NSString *const kTitleKey    = @"title";
      }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
-         NSLog(@"%@", error);
+         Log(@"%@", error);
          [self updateIndicator];
      }];
     
@@ -176,7 +177,7 @@ static NSString *const kTitleKey    = @"title";
 
 - (void)fetchInfosForPage:(NSUInteger)page completion:(void (^)())completion
 {
-    NSLog(@"fetching page: %u", page);
+    Log(@"fetching page: %u", page);
     NSString *url = [NSString stringWithFormat:@"http://www.meh.ro/page/%u", page];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
@@ -192,7 +193,7 @@ static NSString *const kTitleKey    = @"title";
      }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
-         NSLog(@"%@", error);
+         Log(@"%@", error);
          [self updateIndicator];
      }];
     
@@ -229,19 +230,7 @@ static NSString *const kTitleKey    = @"title";
 
 
 - (void)processInfos:(NSArray *)infos forPage:(NSUInteger)page
-{
-    NSArray *infosToReset = [ImageInfo MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"pageNumber >= %u", page]];
-    for (ImageInfo *info in infosToReset)
-    {
-        [MagicalRecord saveUsingCurrentThreadContextWithBlockAndWait:^(NSManagedObjectContext *context)
-         {
-             ImageInfo *localInfo = [info MR_inContext:context];
-             localInfo.pageNumber = nil;
-         }];
-    }
-    
-    //------------------------------------------------------------------------------------------------
-    
+{    
     NSMutableArray *infoModels = [NSMutableArray array];
     NSUInteger newInfoCount = 0;
     NSUInteger oldInfoCount = 0;
@@ -274,10 +263,31 @@ static NSString *const kTitleKey    = @"title";
         [infoModels addObject:info];
     }
     
-    NSLog(@"new: %u", newInfoCount);
-    NSLog(@"old: %u", oldInfoCount);
+    Log(@"new: %u", newInfoCount);
+    Log(@"old: %u", oldInfoCount);
     
     //------------------------------------------------------------------------------------------------
+    
+    if (page == 1 && newInfoCount == 0)
+    {
+        Log(@"No new images found.");
+        return;
+    }
+    
+    //------------------------------------------------------------------------------------------------
+    
+    NSArray *infosToReset = [ImageInfo MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"pageNumber >= %u", page]];
+    for (ImageInfo *info in infosToReset)
+    {
+        [MagicalRecord saveUsingCurrentThreadContextWithBlockAndWait:^(NSManagedObjectContext *context)
+         {
+             ImageInfo *localInfo = [info MR_inContext:context];
+             localInfo.pageNumber = nil;
+         }];
+    }
+    
+    //------------------------------------------------------------------------------------------------
+    
     
     NSUInteger i = 0;
     __block BOOL linked = NO;
@@ -297,34 +307,34 @@ static NSString *const kTitleKey    = @"title";
                      ImageInfo *lastPredecessingInfo = [predecessingInfos lastObject];
                      
                      lastPredecessingInfo.successor = localInfo;
-                     NSLog(@"setting successor   of '%@' to '%@'", lastPredecessingInfo.title, localInfo.title);
+                     Log(@"setting successor   of '%@' to '%@'", lastPredecessingInfo.title, localInfo.title);
                      
                      localInfo.predecessor = lastPredecessingInfo;
-                     NSLog(@"setting predecessor of '%@' to '%@'", localInfo.title, lastPredecessingInfo.title);
+                     Log(@"setting predecessor of '%@' to '%@'", localInfo.title, lastPredecessingInfo.title);
                      
-                     NSLog(@"link established");
+                     Log(@"link established");
                  }
              }
              
              if (i > 0)
              {
                  localInfo.predecessor = infoModels[i-1];
-                 NSLog(@"setting predecessor of '%@' to '%@'", localInfo.title, localInfo.predecessor.title);
+                 Log(@"setting predecessor of '%@' to '%@'", localInfo.title, localInfo.predecessor.title);
              }
              
              if (i < [infoModels count]-1)
              {
                  localInfo.successor = infoModels[i+1];
-                 NSLog(@"setting successor   of '%@' to '%@'", localInfo.title, localInfo.successor.title);
+                 Log(@"setting successor   of '%@' to '%@'", localInfo.title, localInfo.successor.title);
              }
              
              if (localInfo.successor.successor)
              {
-                 NSLog(@"successor of '%@' is '%@'", localInfo.title, localInfo.successor.title);
-                 NSLog(@"successor of '%@' is '%@'", localInfo.successor.title, localInfo.successor.successor.title);
+                 Log(@"successor of '%@' is '%@'", localInfo.title, localInfo.successor.title);
+                 Log(@"successor of '%@' is '%@'", localInfo.successor.title, localInfo.successor.successor.title);
                  
                  localInfo.successor.predecessor = localInfo;
-                 NSLog(@"setting predecessor of '%@' to '%@'", localInfo.successor.title, localInfo.successor.predecessor.title);
+                 Log(@"setting predecessor of '%@' to '%@'", localInfo.successor.title, localInfo.successor.predecessor.title);
                  linked = YES;
              }
              
@@ -335,7 +345,7 @@ static NSString *const kTitleKey    = @"title";
         i++;
     }
     
-    NSLog(@"link established: %u", linked);
+    Log(@"link established: %u", linked);
 }
 
 
@@ -343,6 +353,39 @@ static NSString *const kTitleKey    = @"title";
 {
     BOOL visible = [self.queue operationCount] > 0;
     [UIApplication sharedApplication].networkActivityIndicatorVisible = visible;
+}
+
+
+- (void)removeOldImages
+{
+//    NSArray *infos = [ImageInfo MR_findAllSortedBy:@"url" ascending:YES];
+//
+//    NSUInteger countBefore = 0;
+//    NSUInteger counter = 0;
+//    
+//    for (ImageInfo *info in infos)
+//    {
+//        if (info.imageData) countBefore++;
+//
+//        [info.imageData MR_deleteEntity];
+//        
+////        [MagicalRecord saveUsingCurrentThreadContextWithBlockAndWait:^(NSManagedObjectContext *context)
+////         {
+////             ImageInfo *localInfo = [info MR_inContext:context];
+////             localInfo.imageData = nil;
+////         }];
+//
+//        
+//        counter++;
+//        if (counter >= kMaxStoredImages) break;
+//    }
+//    
+//    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+//    
+//    NSUInteger countAfter = [ImageData MR_countOfEntities];
+//    
+//    Log(@"image data count before deleting: %u", countBefore);
+//    Log(@"image data count after deleting: %u", countAfter);
 }
 
 

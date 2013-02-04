@@ -8,7 +8,7 @@
         <attribute name="pageNumber" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url" attributeType="String" indexed="YES" syncable="YES"/>
-        <relationship name="imageData" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="ImageData" inverseName="imageInfo" inverseEntity="ImageData" storedInTruthFile="YES" syncable="YES"/>
+        <relationship name="imageData" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="ImageData" inverseName="imageInfo" inverseEntity="ImageData" syncable="YES"/>
         <relationship name="predecessor" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="ImageInfo" inverseName="successor" inverseEntity="ImageInfo" syncable="YES"/>
         <relationship name="successor" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="ImageInfo" inverseName="predecessor" inverseEntity="ImageInfo" syncable="YES"/>
     </entity>
