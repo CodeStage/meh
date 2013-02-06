@@ -77,7 +77,7 @@
     if (_imageScrollView.zoomScale == _imageScrollView.minimumZoomScale && _imageScrollView.zoomScale < _imageScrollView.maximumZoomScale)
     {
         // zoom in
-        CGRect zoomRect = [self zoomRectForScale:_imageScrollView.maximumZoomScale withCenter:[gestureRecognizer locationInView:_imageScrollView.zoomView]];
+        CGRect zoomRect = [self zoomRectForScale:_imageScrollView.maximumZoomScale/2 withCenter:[gestureRecognizer locationInView:_imageScrollView.zoomView]];
         [_imageScrollView zoomToRect:zoomRect animated:YES];
     }
     else if (_imageScrollView.zoomScale > _imageScrollView.minimumZoomScale)

@@ -8,11 +8,16 @@
 
 #import "PageViewController.h"
 #import "ImageScrollViewController.h"
+#import "PageChildViewController.h"
 
 
 @interface PageViewController ()
 
 @property (nonatomic) CSImageWire *wire;
+
+@property (nonatomic, strong) PageChildViewController *firstController;
+@property (nonatomic, strong) PageChildViewController *secondController;
+@property (nonatomic, strong) PageChildViewController *thirdController;
 
 @end
 
@@ -40,6 +45,17 @@
     self.wire.delegate = self;
     self.delegate = self;
     self.dataSource = self;
+    
+    self.firstController = [[PageChildViewController alloc] init];
+    self.secondController = [[PageChildViewController alloc] init];
+    self.thirdController = [[PageChildViewController alloc] init];
+    
+    self.firstController.predecessor = self.thirdController;
+    self.firstController.successor = self.secondController;
+    self.secondController.predecessor = self.firstController;
+    self.secondController.successor = self.thirdController;
+    self.thirdController.predecessor = self.secondController;
+    self.thirdController.successor = self.firstController;
 }
 
 

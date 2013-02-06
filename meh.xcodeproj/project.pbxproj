@@ -44,6 +44,7 @@
 		7B6DAD2916B6FE4D001A5960 /* CSImageWire.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B6DAD2816B6FE4D001A5960 /* CSImageWire.m */; };
 		7BAEFCBF16C3159C00BD07E5 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BAEFCBB16C3159C00BD07E5 /* libTestFlight.a */; };
 		7BAEFCC316C315C600BD07E5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BAEFCC216C315C600BD07E5 /* libz.dylib */; };
+		7BAEFCC616C31A8000BD07E5 /* PageChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BAEFCC516C31A7F00BD07E5 /* PageChildViewController.m */; };
 		7BE123C516C0685800D4510C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BE123C116C0685800D4510C /* Icon.png */; };
 		7BE123C616C0685800D4510C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BE123C216C0685800D4510C /* Icon@2x.png */; };
 		7BE123C716C0685800D4510C /* Icon@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BE123C316C0685800D4510C /* Icon@2x~ipad.png */; };
@@ -169,6 +170,8 @@
 		7BAEFCBB16C3159C00BD07E5 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
 		7BAEFCBE16C3159C00BD07E5 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		7BAEFCC216C315C600BD07E5 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		7BAEFCC416C31A7F00BD07E5 /* PageChildViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageChildViewController.h; sourceTree = "<group>"; };
+		7BAEFCC516C31A7F00BD07E5 /* PageChildViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageChildViewController.m; sourceTree = "<group>"; };
 		7BE123C116C0685800D4510C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		7BE123C216C0685800D4510C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		7BE123C316C0685800D4510C /* Icon@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x~ipad.png"; sourceTree = "<group>"; };
@@ -455,6 +458,8 @@
 				7BEDF4B916BD9C85009CE596 /* ImageScrollViewController.m */,
 				7BEDF4BC16BDA2D5009CE596 /* PageViewController.h */,
 				7BEDF4BD16BDA2D6009CE596 /* PageViewController.m */,
+				7BAEFCC416C31A7F00BD07E5 /* PageChildViewController.h */,
+				7BAEFCC516C31A7F00BD07E5 /* PageChildViewController.m */,
 			);
 			path = meh;
 			sourceTree = "<group>";
@@ -676,6 +681,7 @@
 				7BEDF4BA16BD9C85009CE596 /* ImageScrollView.m in Sources */,
 				7BEDF4BB16BD9C85009CE596 /* ImageScrollViewController.m in Sources */,
 				7BEDF4BE16BDA2D6009CE596 /* PageViewController.m in Sources */,
+				7BAEFCC616C31A8000BD07E5 /* PageChildViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
