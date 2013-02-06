@@ -17,6 +17,7 @@ static NSString *const kTitleKey    = @"title";
 @interface CSImageWire ()
 
 @property (nonatomic) NSOperationQueue *queue;
+@property (nonatomic) BOOL pageFetchingInProgess;
 
 @end
 
@@ -40,6 +41,8 @@ static NSString *const kTitleKey    = @"title";
 
 - (ImageInfo *)firstImage
 {
+    Log(@"Asking for first image");
+    
     ImageInfo *info = [ImageInfo MR_findFirstOrderedByAttribute:@"url" ascending:NO];
     [self refreshFirstImage];
     [self removeOldImages];
@@ -54,11 +57,14 @@ static NSString *const kTitleKey    = @"title";
 
 - (ImageInfo *)predecessingImageForImage:(ImageInfo *)info
 {
-    info = [ImageInfo MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"url == %@", info.url] sortedBy:@"url" ascending:NO];
+    Log(@"Asking for predecessor of '%@'", info.title);
+    
+//    info = [ImageInfo MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"url == %@", info.url] sortedBy:@"url" ascending:NO];
     if (info.predecessor)
     {
         if (info.predecessor.imageData.data)
         {
+            Log(@"Predecessor is in cache");
             return info.predecessor;
         }
         else
@@ -77,11 +83,14 @@ static NSString *const kTitleKey    = @"title";
 
 - (ImageInfo *)successingImageForImage:(ImageInfo *)info
 {
-    info = [ImageInfo MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"url == %@", info.url] sortedBy:@"url" ascending:NO];
+    Log(@"Asking for successor of '%@'", info.title);
+    
+//    info = [ImageInfo MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"url == %@", info.url] sortedBy:@"url" ascending:NO];
     if (info.successor)
     {
         if (info.successor.imageData.data)
         {
+            Log(@"Successor is in cache");
             return info.successor;
         }
         else
@@ -99,7 +108,7 @@ static NSString *const kTitleKey    = @"title";
             }
             else
             {
-                [self fetchDataForImageInfo:info firstImage:NO];
+                [self fetchDataForImageInfo:info.successor firstImage:NO];
             }
         }];
         return nil;
@@ -112,7 +121,11 @@ static NSString *const kTitleKey    = @"title";
 
 - (void)refreshFirstImage
 {
-    [self fetchInfosForPage:1 completion:NULL];
+    [self fetchInfosForPage:1 completion:^
+     {
+         ImageInfo *info = [ImageInfo MR_findFirstOrderedByAttribute:@"url" ascending:NO];
+         [self fetchDataForImageInfo:info firstImage:YES];
+     }];
 }
 
 
@@ -134,38 +147,67 @@ static NSString *const kTitleKey    = @"title";
 - (void)didLoadImage:(ImageInfo *)info firstImage:(BOOL)firstImage
 {
     Log(@"Notifying delegate with '%@' (first: %u)", info.title, firstImage);
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^
+    {
         [self.delegate imageWire:self didLoadImage:info];
     });
+    
+    if (firstImage)
+    {
+        [self successingImageForImage:info];
+    }
 }
 
 
 - (void)fetchDataForImageInfo:(ImageInfo *)info firstImage:(BOOL)firstImage
 {
+    Log(@"fetching image: %@", info.title);
+    
     if (info.imageData.data)
     {
+        Log(@"fetching aborted (data available)");
         return;
     }
     
-    Log(@"fetching image: %@", info.title);
+    if (info.fetchingInProgressValue)
+    {
+        Log(@"fetching aborted (already in progress)");
+        return;
+    }
+
+    info.fetchingInProgressValue = YES;
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:info.url]];
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
      {
-         [MagicalRecord saveUsingCurrentThreadContextWithBlockAndWait:^(NSManagedObjectContext *context)
-          {
-              ImageInfo *localInfo = [info MR_inContext:context];
-              localInfo.imageData = [ImageData MR_createInContext:context];
-              localInfo.imageData.data = responseObject;
-              [self didLoadImage:localInfo firstImage:firstImage];
-              [self updateIndicator];
-              
-          }];
+         ImageData *data = [ImageData MR_createEntity];
+         data.data = responseObject;
+
+         if (info.imageData)
+         {
+             Log(@"image already exists: %@", info.title);
+         }
+         else
+         {
+             info.imageData = data;
+             Log(@"saving image: %@", info.title);
+         }
+         
+         info.fetchingInProgressValue = NO;
+         [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+         
+         [self didLoadImage:info firstImage:firstImage];
+         [self updateIndicator];
+
      }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
-         Log(@"%@", error);
+         info.fetchingInProgressValue = NO;
+         [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+         
+         Log(@"Error: %@", error);
          [self updateIndicator];
      }];
     
@@ -184,12 +226,10 @@ static NSString *const kTitleKey    = @"title";
     
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
      {
-//         [self.queue addOperationWithBlock:^{
-             NSArray *infos = [self imageInfosFromData:responseObject forPage:page];
-             [self processInfos:infos forPage:page];
-             if (completion) completion();
-             [self updateIndicator];
-//         }];
+         NSArray *infos = [self imageInfosFromData:responseObject forPage:page];
+         [self processInfos:infos forPage:page];
+         if (completion) completion();
+         [self updateIndicator];
      }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
@@ -207,10 +247,11 @@ static NSString *const kTitleKey    = @"title";
 
 - (NSArray *)imageInfosFromData:(NSData *)data forPage:(NSUInteger)page
 {
-    NSError *error = nil;
     NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSString *pattern = @"<a.*href=\"(http://www.meh.ro/wp-content/uploads/[^ ]*\\.jpg)\".*title=\"([^\"]*)\".*</a>";
     NSMutableArray *imageInfos = [NSMutableArray array];
+    NSError *error = nil;
+    
+    NSString *pattern = @"<a\\shref=\"(http://www.meh.ro/wp-content/uploads/[^\\s]*\\.[a-zA-Z]{3})\".*title=\"([^\"]*)\".*</a>";    
     
     NSRegularExpression *expr = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:&error];
     [expr enumerateMatchesInString:string
@@ -224,6 +265,11 @@ static NSString *const kTitleKey    = @"title";
          
          [imageInfos addObject:info];
      }];
+    
+    if (error) Log(@"Error: %@", error);
+    
+    NSSortDescriptor *sd = [NSSortDescriptor sortDescriptorWithKey:@"url" ascending:NO selector:@selector(compare:)];
+    [imageInfos sortUsingDescriptors:@[sd]];
     
     return imageInfos;
 }
@@ -251,18 +297,15 @@ static NSString *const kTitleKey    = @"title";
             oldInfoCount++;
         }
         
-        [MagicalRecord saveUsingCurrentThreadContextWithBlockAndWait:^(NSManagedObjectContext *context)
-         {
-             ImageInfo *localInfo = [info MR_inContext:context];
-             localInfo.url = url;
-             localInfo.title = title;
-             localInfo.pageNumberValue = page;
-         }];
+        info.url = url;
+        info.title = title;
+        info.pageNumberValue = page;
         
-        [self fetchDataForImageInfo:info firstImage:NO];
         [infoModels addObject:info];
     }
     
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+
     Log(@"new: %u", newInfoCount);
     Log(@"old: %u", oldInfoCount);
     
@@ -279,12 +322,10 @@ static NSString *const kTitleKey    = @"title";
     NSArray *infosToReset = [ImageInfo MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"pageNumber >= %u", page]];
     for (ImageInfo *info in infosToReset)
     {
-        [MagicalRecord saveUsingCurrentThreadContextWithBlockAndWait:^(NSManagedObjectContext *context)
-         {
-             ImageInfo *localInfo = [info MR_inContext:context];
-             localInfo.pageNumber = nil;
-         }];
+        info.pageNumber = nil;
     }
+    
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
     
     //------------------------------------------------------------------------------------------------
     
@@ -294,57 +335,51 @@ static NSString *const kTitleKey    = @"title";
     
     for (ImageInfo *info in infoModels)
     {
-        [MagicalRecord saveUsingCurrentThreadContextWithBlockAndWait:^(NSManagedObjectContext *context)
-         {
-             ImageInfo *localInfo = [info MR_inContext:context];
-             
-             if (i == 0)
-             {
-                 if (page > 1)
-                 {
-                     NSArray *predecessingInfos = [ImageInfo MR_findAllSortedBy:@"url" ascending:NO withPredicate:[NSPredicate predicateWithFormat:@"pageNumber == %u", page - 1]];
-                     
-                     ImageInfo *lastPredecessingInfo = [predecessingInfos lastObject];
-                     
-                     lastPredecessingInfo.successor = localInfo;
-                     Log(@"setting successor   of '%@' to '%@'", lastPredecessingInfo.title, localInfo.title);
-                     
-                     localInfo.predecessor = lastPredecessingInfo;
-                     Log(@"setting predecessor of '%@' to '%@'", localInfo.title, lastPredecessingInfo.title);
-                     
-                     Log(@"link established");
-                 }
-             }
-             
-             if (i > 0)
-             {
-                 localInfo.predecessor = infoModels[i-1];
-                 Log(@"setting predecessor of '%@' to '%@'", localInfo.title, localInfo.predecessor.title);
-             }
-             
-             if (i < [infoModels count]-1)
-             {
-                 localInfo.successor = infoModels[i+1];
-                 Log(@"setting successor   of '%@' to '%@'", localInfo.title, localInfo.successor.title);
-             }
-             
-             if (localInfo.successor.successor)
-             {
-                 Log(@"successor of '%@' is '%@'", localInfo.title, localInfo.successor.title);
-                 Log(@"successor of '%@' is '%@'", localInfo.successor.title, localInfo.successor.successor.title);
-                 
-                 localInfo.successor.predecessor = localInfo;
-                 Log(@"setting predecessor of '%@' to '%@'", localInfo.successor.title, localInfo.successor.predecessor.title);
-                 linked = YES;
-             }
-             
-
-         }];
+        if (i == 0)
+        {
+            if (page > 1)
+            {
+                NSArray *predecessingInfos = [ImageInfo MR_findAllSortedBy:@"url" ascending:NO withPredicate:[NSPredicate predicateWithFormat:@"pageNumber == %u", page - 1]];
+                
+                ImageInfo *lastPredecessingInfo = [predecessingInfos lastObject];
+                
+                lastPredecessingInfo.successor = info;
+                Log(@"setting successor   of '%@' to '%@'", lastPredecessingInfo.title, info.title);
+                
+                info.predecessor = lastPredecessingInfo;
+                Log(@"setting predecessor of '%@' to '%@'", info.title, lastPredecessingInfo.title);
+                
+                Log(@"link established");
+            }
+        }
+        
+        if (i > 0)
+        {
+            info.predecessor = infoModels[i-1];
+            Log(@"setting predecessor of '%@' to '%@'", info.title, info.predecessor.title);
+        }
+        
+        if (i < [infoModels count]-1)
+        {
+            info.successor = infoModels[i+1];
+            Log(@"setting successor   of '%@' to '%@'", info.title, info.successor.title);
+        }
+        
+        if (info.successor.successor)
+        {
+            Log(@"successor of '%@' is '%@'", info.title, info.successor.title);
+            Log(@"successor of '%@' is '%@'", info.successor.title, info.successor.successor.title);
+            
+            info.successor.predecessor = info;
+            Log(@"setting predecessor of '%@' to '%@'", info.successor.title, info.successor.predecessor.title);
+            linked = YES;
+        }
         
         if (linked) break;
         i++;
     }
     
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
     Log(@"link established: %u", linked);
 }
 

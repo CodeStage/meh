@@ -8,6 +8,8 @@
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 
+#define MR_ENABLE_ACTIVE_RECORD_LOGGING 0
+
 #import "AFNetworking.h"
 #import "MagicalRecord.h"
 #import "CoreData+MagicalRecord.h"
@@ -19,7 +21,8 @@
 #endif
 
 #ifdef DEBUG
-    #define Log(...) NSLog(@"%s (%p) %@", __PRETTY_FUNCTION__, self, [NSString stringWithFormat:__VA_ARGS__])
+//    #define Log(...) NSLog(@"%s (%p) %@", __PRETTY_FUNCTION__, self, [NSString stringWithFormat:__VA_ARGS__])
+    #define Log(...) NSLog(@"%@", [NSString stringWithFormat:__VA_ARGS__])
 #else
     #define Log(...) ((void)0)
 #endif

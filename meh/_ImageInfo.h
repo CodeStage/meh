@@ -5,6 +5,7 @@
 
 
 extern const struct ImageInfoAttributes {
+	__unsafe_unretained NSString *fetchingInProgress;
 	__unsafe_unretained NSString *pageNumber;
 	__unsafe_unretained NSString *title;
 	__unsafe_unretained NSString *url;
@@ -27,6 +28,7 @@ extern const struct ImageInfoFetchedProperties {
 
 
 
+
 @interface ImageInfoID : NSManagedObjectID {}
 @end
 
@@ -35,6 +37,20 @@ extern const struct ImageInfoFetchedProperties {
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (ImageInfoID*)objectID;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* fetchingInProgress;
+
+
+
+@property BOOL fetchingInProgressValue;
+- (BOOL)fetchingInProgressValue;
+- (void)setFetchingInProgressValue:(BOOL)value_;
+
+//- (BOOL)validateFetchingInProgress:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -103,6 +119,15 @@ extern const struct ImageInfoFetchedProperties {
 @end
 
 @interface _ImageInfo (CoreDataGeneratedPrimitiveAccessors)
+
+
+- (NSNumber*)primitiveFetchingInProgress;
+- (void)setPrimitiveFetchingInProgress:(NSNumber*)value;
+
+- (BOOL)primitiveFetchingInProgressValue;
+- (void)setPrimitiveFetchingInProgressValue:(BOOL)value_;
+
+
 
 
 - (NSNumber*)primitivePageNumber;

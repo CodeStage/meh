@@ -4,6 +4,7 @@
 #import "_ImageInfo.h"
 
 const struct ImageInfoAttributes ImageInfoAttributes = {
+	.fetchingInProgress = @"fetchingInProgress",
 	.pageNumber = @"pageNumber",
 	.title = @"title",
 	.url = @"url",
@@ -44,6 +45,11 @@ const struct ImageInfoFetchedProperties ImageInfoFetchedProperties = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
+	if ([key isEqualToString:@"fetchingInProgressValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"fetchingInProgress"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
 	if ([key isEqualToString:@"pageNumberValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"pageNumber"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -52,6 +58,32 @@ const struct ImageInfoFetchedProperties ImageInfoFetchedProperties = {
 
 	return keyPaths;
 }
+
+
+
+
+@dynamic fetchingInProgress;
+
+
+
+- (BOOL)fetchingInProgressValue {
+	NSNumber *result = [self fetchingInProgress];
+	return [result boolValue];
+}
+
+- (void)setFetchingInProgressValue:(BOOL)value_ {
+	[self setFetchingInProgress:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveFetchingInProgressValue {
+	NSNumber *result = [self primitiveFetchingInProgress];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveFetchingInProgressValue:(BOOL)value_ {
+	[self setPrimitiveFetchingInProgress:[NSNumber numberWithBool:value_]];
+}
+
 
 
 

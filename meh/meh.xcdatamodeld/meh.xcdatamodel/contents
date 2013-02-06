@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="12C60" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="ImageData" representedClassName="ImageData" syncable="YES">
-        <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="data" attributeType="Binary" syncable="YES"/>
         <relationship name="imageInfo" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="ImageInfo" inverseName="imageData" inverseEntity="ImageInfo" syncable="YES"/>
     </entity>
     <entity name="ImageInfo" representedClassName="ImageInfo" syncable="YES">
+        <attribute name="fetchingInProgress" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="pageNumber" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url" attributeType="String" indexed="YES" syncable="YES"/>
@@ -14,6 +15,6 @@
     </entity>
     <elements>
         <element name="ImageData" positionX="0" positionY="0" width="128" height="75"/>
-        <element name="ImageInfo" positionX="0" positionY="0" width="128" height="135"/>
+        <element name="ImageInfo" positionX="0" positionY="0" width="128" height="150"/>
     </elements>
 </model>
