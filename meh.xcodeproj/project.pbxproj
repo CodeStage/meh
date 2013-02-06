@@ -42,6 +42,8 @@
 		7B6DAD2016B6FC66001A5960 /* MagicalRecord+ShorthandSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B6DAD0316B6FC66001A5960 /* MagicalRecord+ShorthandSupport.m */; };
 		7B6DAD2116B6FC66001A5960 /* MagicalRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B6DAD0516B6FC66001A5960 /* MagicalRecord.m */; };
 		7B6DAD2916B6FE4D001A5960 /* CSImageWire.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B6DAD2816B6FE4D001A5960 /* CSImageWire.m */; };
+		7BAEFCBF16C3159C00BD07E5 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BAEFCBB16C3159C00BD07E5 /* libTestFlight.a */; };
+		7BAEFCC316C315C600BD07E5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BAEFCC216C315C600BD07E5 /* libz.dylib */; };
 		7BE123C516C0685800D4510C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BE123C116C0685800D4510C /* Icon.png */; };
 		7BE123C616C0685800D4510C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BE123C216C0685800D4510C /* Icon@2x.png */; };
 		7BE123C716C0685800D4510C /* Icon@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 7BE123C316C0685800D4510C /* Icon@2x~ipad.png */; };
@@ -164,6 +166,9 @@
 		7B6DAD0716B6FC66001A5960 /* CoreData+MagicalRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreData+MagicalRecord.h"; sourceTree = "<group>"; };
 		7B6DAD2716B6FE4D001A5960 /* CSImageWire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CSImageWire.h; path = CSImageWire/CSImageWire.h; sourceTree = "<group>"; };
 		7B6DAD2816B6FE4D001A5960 /* CSImageWire.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CSImageWire.m; path = CSImageWire/CSImageWire.m; sourceTree = "<group>"; };
+		7BAEFCBB16C3159C00BD07E5 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		7BAEFCBE16C3159C00BD07E5 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		7BAEFCC216C315C600BD07E5 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		7BE123C116C0685800D4510C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		7BE123C216C0685800D4510C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		7BE123C316C0685800D4510C /* Icon@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x~ipad.png"; sourceTree = "<group>"; };
@@ -221,12 +226,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BAEFCC316C315C600BD07E5 /* libz.dylib in Frameworks */,
 				7B6DAB2316B6FA61001A5960 /* CoreData.framework in Frameworks */,
 				7B6DAB2116B6FA5A001A5960 /* MobileCoreServices.framework in Frameworks */,
 				7B6DAB1F16B6FA4A001A5960 /* SystemConfiguration.framework in Frameworks */,
 				7BF03B5416B061240039D894 /* UIKit.framework in Frameworks */,
 				7BF03B5616B061240039D894 /* Foundation.framework in Frameworks */,
 				7BF03B5816B061240039D894 /* CoreGraphics.framework in Frameworks */,
+				7BAEFCBF16C3159C00BD07E5 /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,6 +377,15 @@
 			name = CSImageWire;
 			sourceTree = "<group>";
 		};
+		7BAEFCBA16C3159C00BD07E5 /* TestFlightSDK1.1 */ = {
+			isa = PBXGroup;
+			children = (
+				7BAEFCBB16C3159C00BD07E5 /* libTestFlight.a */,
+				7BAEFCBE16C3159C00BD07E5 /* TestFlight.h */,
+			);
+			path = TestFlightSDK1.1;
+			sourceTree = "<group>";
+		};
 		7BE123B216C067F100D4510C /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -391,6 +407,7 @@
 			children = (
 				7BF03B9116B0620A0039D894 /* AFNetworking */,
 				7B6DACCC16B6FC66001A5960 /* MagicalRecord */,
+				7BAEFCBA16C3159C00BD07E5 /* TestFlightSDK1.1 */,
 				7BF03B5916B061240039D894 /* meh */,
 				7BE123B216C067F100D4510C /* Images */,
 				7BF03B8016B061250039D894 /* mehTests */,
@@ -411,6 +428,7 @@
 		7BF03B5216B061240039D894 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7BAEFCC216C315C600BD07E5 /* libz.dylib */,
 				7B6DAB2216B6FA61001A5960 /* CoreData.framework */,
 				7B6DAB2016B6FA5A001A5960 /* MobileCoreServices.framework */,
 				7B6DAB1E16B6FA4A001A5960 /* SystemConfiguration.framework */,
@@ -775,6 +793,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/MagicalRecord/Project Files/iOS App Unit Tests/Frameworks/OCMockLibrary\"",
 					"\"$(SRCROOT)/MagicalRecord/Project Files/Mac App Unit Tests/Frameworks/OCMockLibrary\"",
+					"\"$(SRCROOT)/TestFlightSDK1.1\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -798,6 +817,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/MagicalRecord/Project Files/iOS App Unit Tests/Frameworks/OCMockLibrary\"",
 					"\"$(SRCROOT)/MagicalRecord/Project Files/Mac App Unit Tests/Frameworks/OCMockLibrary\"",
+					"\"$(SRCROOT)/TestFlightSDK1.1\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

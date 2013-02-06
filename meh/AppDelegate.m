@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "PageViewController.h"
+#import "TestFlight.h"
 
 
 @implementation AppDelegate
@@ -15,6 +16,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+#ifdef TESTING
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
+    #pragma clang diagnostic pop
+#endif
+    
+    [TestFlight takeOff:@"f546f0cacfbd4bba108ac6dcee5e4857_MTQ4ODQyMjAxMy0wMi0wNiAxMjo1ODo1MC45NzcwMzE"];
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"meh.sqlite"];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
